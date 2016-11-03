@@ -17,8 +17,9 @@ def parse_fasta(lines):
     """
     seqs = {}
     for line in lines:
-        if not line.stripit():
-            continue
+#        if not line.stripit():
+#            continue
+# Debug: This statement doesn't seem to do anything useful
         if line.startswith('>'):
             label = line.strip()[1:]
             seqs[label] = ""
@@ -82,7 +83,8 @@ def run_jellyfish(input_fn, kmer_size=15):
     kmer_size: int, size of k-mers used by jellyfish
     """
     out_fn = 'tomato%s'%(kmer_size)
-    cmd = 'jellyphish count -m %s -s 1000000 -o %s %s'\
+    # Debug: Changed jellyphish for jellyfish
+    cmd = 'jellyfish count -m %s -s 1000000 -o %s %s'\
         %(kmer_size, out_fn, input_fn)
     e = subprocess.check_output(cmd, shell=True)
     if os.path.exists(out_fn):
