@@ -95,7 +95,8 @@ def run_jellyfish(input_fn, kmer_size=15):
 if __name__ == "__main__":
 
     # parse input data
-    inp_fn = argv[1]
+    inp_fn = "tomato.fasta"
+    #inp_fn = argv[1]
     dna_seqs = parse_fasta(open(inp_fn))
     # extract k-mers of length 15 and print the results
     kmer_len = 15
