@@ -94,13 +94,8 @@ def extract_kmers(seqs, k=15, skip_unknown=True):
         should be skipped
     """
     kmer_size = k
-    ch = {} #dict to store characters
     res = {} #dict to store k-mers and counts
     for label, seq in seqs.items():  # DEBUG: Added the colon
-        for c in seq:
-            if c not in ch:
-                ch[c] = 0
-            ch[c] += 1
         for i in range(len(seq)-kmer_size+1): # DEBUG: Last base now included
             kmer = seq[i:i+kmer_size]
             count = True
