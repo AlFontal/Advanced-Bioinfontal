@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e44bcd5f-2325-4105-8d56-21df947bc4a4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Debugging/debug_P1.py" afterPath="$PROJECT_DIR$/Debugging/debug_P1.py" />
     </list>
     <ignored path="Advanced-Bioinfontal.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -367,7 +366,13 @@
       <option name="project" value="LOCAL" />
       <updated>1478550653785</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Deleted the for loop that kept track of characters">
+      <created>1478594777380</created>
+      <option name="number" value="00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1478594777380</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -410,7 +415,8 @@
     <MESSAGE value="Temporary commented argv" />
     <MESSAGE value="Added some debugging comments and fixed some bugs" />
     <MESSAGE value="Added more things" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added more things" />
+    <MESSAGE value="Deleted the for loop that kept track of characters" />
+    <option name="LAST_COMMIT_MESSAGE" value="Deleted the for loop that kept track of characters" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
