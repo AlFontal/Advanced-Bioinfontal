@@ -1,13 +1,14 @@
 #! /usr/bin/env python
+
 from __future__ import division
+from sys import argv
+import numpy as np
+
 
 """
 Author: Alejandro Fontal and Roos Goessen
 Script to solve P3
 """
-
-from sys import argv
-import numpy as np
 
 
 def parse_fastq_file(filename):
