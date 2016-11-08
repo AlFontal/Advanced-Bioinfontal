@@ -45,41 +45,84 @@ def parse_fastq_file(filename):
 
     return seqs_dict
 
-def fastq_stats(fastq_dict):
+
+def fastq_stats(normal_dict, trimmed_dict):
     """
 
     :param fastq_dict:
     :return:
     """
-    lengths = map(len, fastq_dict.keys())
-    max_length = max(lengths)
-    min_length = min(lengths)
-    avg_length = np.mean(lengths)
 
-    qual_dict = {}
+    """
+    Calculate Stats for the non-trimmed data
+    """
 
-    for read in fastq_dict:
-        quality_list = fastq_dict[read]
+    lengths1 = map(len, normal_dict.keys())
+    max_length1 = max(lengths1)
+    min_length1 = min(lengths1)
+    avg_length1 = np.mean(lengths1)
+
+    qual_dict_1 = {}
+
+    for read in normal_dict:
+        quality_list = normal_dict[read]
         for idx, value in enumerate(quality_list):
-            if idx in qual_dict.keys():
-                qual_dict[idx].append(value)
+            if idx in qual_dict_1.keys():
+                qual_dict_1[idx].append(value)
             else:
-                qual_dict[idx] = [value]
+                qual_dict_1[idx] = [value]
 
-    for i in range(max_length):
-        qual_dict[i] = round(np.mean(qual_dict[i]), 2)
+    for i in range(max_length1):
+        qual_dict_1[i] = round(np.mean(qual_dict_1[i]), 2)
 
-    print "\nThe maximum sequence length is {}\n".format(max_length)
-    print "The minimum sequence length is {}\n".format(min_length)
-    print "The average sequence length is {}\n".format(avg_length)
+
+    """
+    Calculate Stats for the trimmed data
+    """
+
+
+    lengths2 = map(len, trimmed_dict.keys())
+    max_length2 = max(lengths2)
+    min_length2 = min(lengths2)
+    avg_length2 = np.mean(lengths2)
+
+    qual_dict_2 = {}
+
+    for read in trimmed_dict:
+        quality_list = trimmed_dict[read]
+        for idx, value in enumerate(quality_list):
+            if idx in qual_dict_2.keys():
+                qual_dict_2[idx].append(value)
+            else:
+                qual_dict_2[idx] = [value]
+
+    for i in range(max_length2):
+        qual_dict_2[i] = round(np.mean(qual_dict_2[i]), 2)
+
+    diff = []
+    for i in range(len(qual_dict_1)):
+        diff.append(round(qual_dict_2[i]-qual_dict_1[i], 3))
+
+
+
+
+    print "ORIGINAL:    min = {}    max = {}    " \
+          "avg = {}".format(max_length1, min_length1, avg_length1)
+
+    print "TRIMMED:    min = {}    max = {}    " \
+          "avg = {}".format(max_length2, min_length2, avg_length2)
+
     print "The average read quality per position is:\n "
-    print "{}  {}\n".format("Position".center(15),
-                            "Average Quality".center(15))
-    for i in range(max_length):
-        print "{}     {}".format(str(i+1).center(15),
-                                 str(qual_dict[i]).ljust(15))
+    print "{}\t\t{}\t\t{}\t\t{}\n".format("Position".center(15),
+                            "Original".center(15), "Trimmed".center(15),
+                                    "Difference".center(15))
+    for i in range(max_length1):
+        print "{}\t\t{}\t\t{}\t\t{}".format(str(i+1).center(15),
+                                 str(qual_dict_1[i]).center(15),
+                                               str(qual_dict_2[i]).center(15),
+                                               str(diff[i]).center(15))
 
-
+    return qual_dict_1
 
 
 
@@ -89,4 +132,12 @@ if __name__ == "__main__":
     #filename = argv[1]
     filename = "tomatosample.fq"
     seqs_dict = parse_fastq_file(filename)
-    fastq_stats(seqs_dict)
+
+
+    filename = "trimmed.fq"
+    seqs_dict2 = parse_fastq_file(filename)
+    trimmed_dic = fastq_stats(seqs_dict, seqs_dict2)
+
+
+
+
