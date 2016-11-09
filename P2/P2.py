@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-
 """
 Author: Alejandro Fontal
 Student Registration Number: 920110-242-090
@@ -77,7 +76,7 @@ def sort_tuples(tuple, p, rev = True):
     :param p: Index of the element that the tuple should be sorted by
     :return: List of tuples sorted by the values of element p of the tuple.
     """
-    sorted_tuples = sorted(gc, key=lambda tup: tup[p], reverse=rev)
+    sorted_tuples = sorted(tuple, key=lambda tup: tup[p], reverse=rev)
 
     return sorted_tuples
 
