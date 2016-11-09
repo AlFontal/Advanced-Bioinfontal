@@ -95,7 +95,7 @@ if __name__ == "__main__":
     sorted_acc = []
     for tup in gc_sorted:
         sorted_acc.append(tup[0])
-
+    
     """ Write a FASTA document with the sorted sequences """
 
     fasta_string = ""
@@ -112,7 +112,7 @@ if __name__ == "__main__":
     tab_string = ""
     for idx, acc in enumerate(sorted_acc):
         tab_string += "".join([acc.ljust(20), str(orgs[acc]).ljust(35),
-                               str(gc[idx][1]).ljust(10),
+                               str(gc_sorted[idx][1]).ljust(10),
                                str(lengths[acc]).ljust(15), "\n"])
 
     tab_file.write(tab_string)
