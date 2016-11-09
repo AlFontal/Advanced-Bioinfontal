@@ -83,7 +83,7 @@ if __name__ == "__main__":
 
     """ Parse the Genbank file and store required data """
 
-    parsed = parse_genbank("argonaut.gb")
+    parsed = parse_genbank(argv[1])
     orgs = parsed[0]
     seqs = parsed[1]
     gc = parsed[2]
