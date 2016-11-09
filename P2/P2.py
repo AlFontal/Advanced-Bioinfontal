@@ -70,18 +70,56 @@ def parse_genbank(filename):
 
     return parsed_list
 
+def sort_tuples(tuple, p, rev = True):
+    """
+
+    :param tuple: List of tuples of 1 or more elements
+    :param p: Index of the element that the tuple should be sorted by
+    :return: List of tuples sorted by the values of element p of the tuple.
+    """
+    sorted_tuples = sorted(gc, key=lambda tup: tup[p], reverse=rev)
+
+    return sorted_tuples
+
+
 if __name__ == "__main__":
 
-    abc = parse_genbank("argonaut.gb")
+    """ Parse the Genbank file and store required data """
 
-    gc = abc[2]
+    parsed = parse_genbank(argv[1])
+    orgs = parsed[0]
+    seqs = parsed[1]
+    gc = parsed[2]
+    lengths = parsed[3]
 
-    print sorted(gc, key=lambda tup: tup[1], reverse= True)
+    """ Sort and get list of Accession IDs sorted by GC content """
+
+    gc_sorted = sort_tuples(gc, 1)
+    sorted_acc = []
+    for tup in gc_sorted:
+        sorted_acc.append(tup[0])
+
+    """ Write a FASTA document with the sorted sequences """
+
+    fasta_string = ""
+    for acc in sorted_acc:
+        fasta_string += ">{} {}\n{}\n".format(acc, orgs[acc], seqs[acc])
 
     fasta_file = open("seqs.fasta", "w")
+    fasta_file.write(fasta_string)
+    fasta_file.close()
 
-    fasta.file.write
+    """ Write a .txt file with the required stats about each sequence """
 
+    tab_file = open("stats.txt", "w")
+    tab_string = ""
+    for idx, acc in enumerate(sorted_acc):
+        tab_string += "".join([acc.ljust(20), str(orgs[acc]).ljust(35),
+                               str(gc[idx][1]).ljust(10),
+                               str(lengths[acc]).ljust(15), "\n"])
+
+    tab_file.write(tab_string)
+    tab_file.close()
 
 
 

@@ -119,9 +119,9 @@ def fastq_stats(normal_dict, trimmed_dict):
                                     "Difference".center(15))
     for i in range(max_length1):
         print "{}\t\t{}\t\t{}\t\t{}".format(str(i+1).center(15),
-                                 str(qual_dict_1[i]).center(15),
-                                               str(qual_dict_2[i]).center(15),
-                                               str(diff[i]).center(15))
+                                            str(qual_dict_1[i]).center(15),
+                                            str(qual_dict_2[i]).center(15),
+                                            str(diff[i]).center(15))
 
     return qual_dict_1
 
