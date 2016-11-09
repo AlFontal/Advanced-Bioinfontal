@@ -41,12 +41,10 @@ def parse_genbank(filename):
         if line.startswith("ACCESSION"):
             access = line[12:].split(" ")[0].strip()
             seq[access] = ""
-            print access
 
         elif "ORGANISM" in line:
             organism = line[12:].strip()
             org[access] = organism
-            print organism
 
         elif line.startswith("ORIGIN"):
             seq_idx_start = idx + 1
@@ -55,7 +53,7 @@ def parse_genbank(filename):
             seq_idx_end = idx -1
             seq_lines_len = seq_idx_end - seq_idx_start
             sequence = []
-            for i in range(seq_lines_len):
+            for i in range(seq_lines_len+1):
                 sequence.append(gb[seq_idx_start + i][10:].strip())
             sequence = "".join(sequence)
             sequence = sequence.replace(" ", "").upper()
@@ -85,7 +83,7 @@ if __name__ == "__main__":
 
     """ Parse the Genbank file and store required data """
 
-    parsed = parse_genbank(argv[1])
+    parsed = parse_genbank("argonaut.gb")
     orgs = parsed[0]
     seqs = parsed[1]
     gc = parsed[2]
