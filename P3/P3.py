@@ -3,12 +3,29 @@
 from __future__ import division
 from sys import argv
 import numpy as np
-
+import subprocess
 
 """
 Author: Alejandro Fontal and Roos Goessen
 Script to solve P3
 """
+
+
+def convert_scores(qual_list, offset=64):
+    """
+
+    :param qual_list: List of encoded qualities
+    :param offset: Offset to take into account (depends on
+    the fasq encoding. Default = 64 (Illumina 1.5+))
+    :return: List of converted qualities (from 0 to 41)
+    """
+
+    qc_vals = []
+    for char in qual_list:
+        qual = ord(char) - offset
+        qc_vals.append(qual)
+
+    return qc_vals
 
 
 def parse_fastq_file(filename):
@@ -22,123 +39,135 @@ def parse_fastq_file(filename):
     file = filename.readlines()
 
     seqs_dict = {}
-    is_seq = False
-    is_qc = False
-    for line in file:
+
+    for idx, line in enumerate(file):
+
         if line.startswith("@"):
-            is_seq = True
-
-        elif is_seq:
-            curr_seq = line.strip()
+            curr_seq = file[idx + 1].strip()
             seqs_dict[curr_seq] = []
-            is_seq = False
 
-        elif line.startswith("+"):
-            is_qc = True
+            qc_vals = convert_scores(file[idx + 3].strip())
 
-        elif is_qc:
-            qc_vals = []
-            for char in line.strip():
-                qual = ord(char) - 64  # Convert Illumina scores to 0-41 scores
-                qc_vals.append(qual)
-                seqs_dict[curr_seq] = qc_vals
-            is_qc = False
+            seqs_dict[curr_seq] = qc_vals
 
     return seqs_dict
 
 
-def fastq_stats(normal_dict, trimmed_dict):
+def fastq_seq_len(parsed_fq_dict):
     """
 
-    :param fastq_dict:
-    :return:
+    :param parsed_fq_dict: Dictionary obtained from the
+    parse_fastq_file function.
+    :return: List containing the max length, min length
+    and average length of the sequences inside contained
+    in the dictionary
     """
 
+    lengths = map(len, parsed_fq_dict.keys())
+    max_length = max(lengths)
+    min_length = min(lengths)
+    avg_length = np.mean(lengths)
+
+    return [max_length, min_length, avg_length]
+
+
+def get_quality_pos(parsed_fq_dict):
     """
-    Calculate Stats for the non-trimmed data
+
+    :param parsed_fq_dict: dictionary with DNA seqs as keys and
+    qualities ranging from 0 to 41 as values
+    :return: A dictionary with positions as keys and average quality per
+    position as values.
     """
 
-    lengths1 = map(len, normal_dict.keys())
-    max_length1 = max(lengths1)
-    min_length1 = min(lengths1)
-    avg_length1 = np.mean(lengths1)
-
-    qual_dict_1 = {}
-
-    for read in normal_dict:
-        quality_list = normal_dict[read]
+    qual_dict = {}
+    for read in parsed_fq_dict:
+        quality_list = parsed_fq_dict[read]
         for idx, value in enumerate(quality_list):
-            if idx in qual_dict_1.keys():
-                qual_dict_1[idx].append(value)
+            if idx in qual_dict.keys():
+                qual_dict[idx].append(value)
             else:
-                qual_dict_1[idx] = [value]
+                qual_dict[idx] = [value]
 
-    for i in range(max_length1):
-        qual_dict_1[i] = round(np.mean(qual_dict_1[i]), 2)
+    for i in range(len(qual_dict)):
+        qual_dict[i] = round(np.mean(qual_dict[i]), 2)
+
+    return qual_dict
 
 
+def get_diff_qual(normal_qual_dict, trimmed_qual_dict):
     """
-    Calculate Stats for the trimmed data
+
+    :param normal_dict: Dictionary containing qualities of the original .fq
+    :param trimmed_dict: Dictionary containing qualities of the trimmed .fq
+    :return: diff: list of integers with the difference between both lists of
+    qualities per position.
     """
-
-
-    lengths2 = map(len, trimmed_dict.keys())
-    max_length2 = max(lengths2)
-    min_length2 = min(lengths2)
-    avg_length2 = np.mean(lengths2)
-
-    qual_dict_2 = {}
-
-    for read in trimmed_dict:
-        quality_list = trimmed_dict[read]
-        for idx, value in enumerate(quality_list):
-            if idx in qual_dict_2.keys():
-                qual_dict_2[idx].append(value)
-            else:
-                qual_dict_2[idx] = [value]
-
-    for i in range(max_length2):
-        qual_dict_2[i] = round(np.mean(qual_dict_2[i]), 2)
 
     diff = []
-    for i in range(len(qual_dict_1)):
-        diff.append(round(qual_dict_2[i]-qual_dict_1[i], 3))
+    for i in range(len(normal_qual_dict)):
+        diff.append(round(trimmed_qual_dict[i] - normal_qual_dict[i], 3))
+
+    return diff
 
 
+def run_trimmer(filename, threshold=30, q=64, out="trimmed.fq"):
+    """
 
+    :param filename: Name or path of the fastq file to trim
+    :param threshold: Minimum base quality to set the trimming.
+    :param q: FASTQ encoding type, default = 64 (Illumina 1.5+)
+    :param out: Filename of the output trimmed file. By default
+    it is "trimmed.fq"
+    :return: Filename of the generated output file.
+    """
 
-    print "ORIGINAL:    min = {}    max = {}    " \
-          "avg = {}".format(max_length1, min_length1, avg_length1)
+    cmd = 'fastq_quality_trimmer -t {} -Q {}' \
+          ' -i {} -o {}'.format(threshold, q,
+                                filename, out)
 
-    print "TRIMMED:    min = {}    max = {}    " \
-          "avg = {}".format(max_length2, min_length2, avg_length2)
+    subprocess.check_output(cmd, shell=True)
 
-    print "The average read quality per position is:\n "
-    print "{}\t\t{}\t\t{}\t\t{}\n".format("Position".center(15),
-                            "Original".center(15), "Trimmed".center(15),
-                                    "Difference".center(15))
-    for i in range(max_length1):
-        print "{}\t\t{}\t\t{}\t\t{}".format(str(i+1).center(15),
-                                            str(qual_dict_1[i]).center(15),
-                                            str(qual_dict_2[i]).center(15),
-                                            str(diff[i]).center(15))
-
-    return qual_dict_1
-
-
+    return out
 
 
 if __name__ == "__main__":
 
-    #filename = argv[1]
-    filename = "tomatosample.fq"
-    seqs_dict = parse_fastq_file(filename)
+    original_file = argv[1]
 
+    # Step 1: Get the trimmed fastq file:
+    trimmed_fq = run_trimmer(original_file)
 
-    filename = "trimmed.fq"
-    seqs_dict2 = parse_fastq_file(filename)
-    trimmed_dic = fastq_stats(seqs_dict, seqs_dict2)
+    # Step 2: Parse both the original and the trimmed fastq files.
+    parsed_orig_fq = parse_fastq_file(original_file)
+    parsed_trim_fq = parse_fastq_file(trimmed_fq)
 
+    # Step 3: Calculate length stats for both files.
+    max_len_o, min_len_o, avg_len_o = fastq_seq_len(parsed_orig_fq)
+    max_len_t, min_len_t, avg_len_t = fastq_seq_len(parsed_trim_fq)
 
+    # Step 4: Calculate average qualities per position and difference between
+    # the two files.
+    qual_dict_o = get_quality_pos(parsed_orig_fq)
+    qual_dict_t = get_quality_pos(parsed_trim_fq)
+    diff = get_diff_qual(qual_dict_o, qual_dict_t)
 
+    # Step 5: Print the output to the console:
+
+    print "\nORIGINAL:   max = {}    min = {}    " \
+          "avg = {}".format(max_len_o, min_len_o, avg_len_o)
+
+    print "TRIMMED:    max = {}    min = {}    " \
+          " avg = {}".format(max_len_t, min_len_t, avg_len_t)
+
+    print "\nThe average read quality per position is:\n "
+    print "{}\t{}\t{}\t{}\n".format("Position".center(15),
+                                    "Original".center(15),
+                                    "Trimmed".center(15),
+                                    "Difference".center(15))
+    for i in range(max_len_o):
+        print "{}\t{:10.2f}\t{:10.2f}\t{:10.2f}".format(str(i + 1).center(15),
+                                                qual_dict_o[i],
+                                                qual_dict_t[i],
+                                                diff[i])
 
