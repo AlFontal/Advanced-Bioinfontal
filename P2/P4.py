@@ -68,7 +68,6 @@ if __name__ == "__main__":
         fasta_string = ">{}\t{}\n{}\n".format(shortest_seq,
                                               orgs[shortest_seq],
                                               seqs[shortest_seq])
-        print fasta_string
         fasta_file.write(fasta_string)
 
 
