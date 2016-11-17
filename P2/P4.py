@@ -9,13 +9,16 @@ from P2 import *
 from sys import argv
 import subprocess
 from Bio import Entrez
+import os
 
 Entrez.email = "alejandro.fontal@wur.nl"
 
 
 def wget(link):
+
     """
-    Downloads the content of the provided link to the current folder
+    Downloads the content of the provided link to the current folder, basically
+    calls the wget function in the unix shell.
     """
     cmd = "wget {}".format(link)
 
@@ -29,64 +32,44 @@ def parse_ids(filename):
 
     return access
 
+
 if __name__ == "__main__":
 
+    path = "{}/p4input.txt".format(os.getcwd())
+    if not os.path.exists(path):
+        wget("http://www.bioinformatics.nl/courses/BIF-30806/docs/p4input.txt")
 
-    #wget("http://www.bioinformatics.nl/courses/BIF-30806/docs/p4input.txt")
+    access = parse_ids("p4input.txt")
 
-    access =  parse_ids("p4input.txt")
-
-
-    parsed_list = []
-
-
-    for accession_nr in access:
-        handle = Entrez.efetch(db="nucleotide", id=accession_nr, rettype="gb",
+    handle = Entrez.efetch(db="nucleotide", id=access, rettype="gb",
                                retmode="text")
 
-        gb = handle.readlines()
+    genbank_file = handle.readlines()
 
+    stats_list = parse_genbank(genbank_file)
 
-        parsed_list.append(parse_genbank(gb))
+    orgs = stats_list[0]
+    access = orgs.keys()
+    seqs = stats_list[1]
+    lengths = stats_list[3]
 
-    access = []
-    for i in range(len(parsed_list)):
-        access.append(parsed_list[i][0].keys()[0])
+    len_tuples = lengths.items()
+    shortest_seq = sort_tuples(len_tuples, 1, rev=False)[0][0]
 
-    lengths = []
-    for i in range(len(parsed_list)):
-        lengths.append(parsed_list[i][3].items()[0])
+    for key in access:
 
-    orgs = []
-    for i in range(len(parsed_list)):
-        orgs.append(parsed_list[i][0].values()[0])
+        print "\n{}\t{}\t{}".format(str(key).ljust(len(max(access)) + 1),
+                            str(orgs[key].ljust(len(max(orgs.values())) + 4)),
+                            str(lengths[key]).ljust(15))
 
-    seqs = []
-    for i in range(len(parsed_list)):
-        seqs.append(parsed_list[i][1].values()[0])
-
-
-
-    shortest_seq = sort_tuples((lengths), 1, rev=False)[0][0]
-    idx = access.index(shortest_seq)
-    """ Write FASTA file with the shortest sequence """
+    """Write FASTA file with the shortest sequence"""
 
     with open("shortest_seq.fasta", "w") as fasta_file:
         fasta_string = ">{}\t{}\n{}\n".format(shortest_seq,
-                                              orgs[idx],
-                                              seqs[idx])
-
+                                              orgs[shortest_seq],
+                                              seqs[shortest_seq])
+        print fasta_string
         fasta_file.write(fasta_string)
-
-    tab_string = ""
-
-    for i in range(len(parsed_list)):
-
-        print "{}\t{}\t{}\n".format(str(access[i].ljust(len(max(access))+1)),
-                                    str(orgs[i].ljust(len(max(orgs))+4)),
-                                    str(lengths[i][1]).ljust(15))
-
-
 
 
 

@@ -81,11 +81,14 @@ def get_quality_pos(parsed_fq_dict):
     """
 
     qual_dict = {}
-    for read in parsed_fq_dict:
-        quality_list = parsed_fq_dict[read]
-        for idx, value in enumerate(quality_list):
-            if idx in qual_dict.keys():
+    for read in parsed_fq_dict:  # For every seq in the parsed file
+
+        for idx, value in enumerate(parsed_fq_dict[read]):
+            # For every quality value for that seq, with the position idx.
+
+            if idx in qual_dict.keys():  # If idx
                 qual_dict[idx].append(value)
+
             else:
                 qual_dict[idx] = [value]
 
@@ -151,7 +154,8 @@ if __name__ == "__main__":
     qual_dict_o = get_quality_pos(parsed_orig_fq)
     qual_dict_t = get_quality_pos(parsed_trim_fq)
     diff = get_diff_qual(qual_dict_o, qual_dict_t)
-
+    print qual_dict_o
+    print qual_dict_t
     # Step 5: Print the output to the console:
 
     print "\nORIGINAL:   max = {}    min = {}    " \

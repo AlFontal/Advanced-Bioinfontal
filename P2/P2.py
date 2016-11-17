@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 
+from __future__ import division
+
 """
 Author: Alejandro Fontal
 Student Registration Number: 920110-242-090
 """
 
 
-from __future__ import division
 from sys import argv
 
 
@@ -30,8 +31,15 @@ def parse_genbank(filename):
     as keys and organism, sequence, GC content (list of tuples) and sequence
     length as values, respectively.
     """
-    gb_file = open(filename, "r")
-    gb = gb_file.readlines()
+    if type(filename) == str:
+         gb_file = open(filename, "r")
+         gb = gb_file.readlines()
+
+    if type(filename) == list:
+        gb = filename
+
+    else:
+        print "Input file type not supported"
 
     seq = {}
     org = {}
@@ -50,7 +58,7 @@ def parse_genbank(filename):
             seq_idx_start = idx + 1
 
         elif line.startswith("//"):
-            seq_idx_end = idx -1
+            seq_idx_end = idx - 1
             seq_lines_len = seq_idx_end - seq_idx_start
             sequence = []
             for i in range(seq_lines_len+1):
@@ -95,7 +103,7 @@ if __name__ == "__main__":
     sorted_acc = []
     for tup in gc_sorted:
         sorted_acc.append(tup[0])
-    
+
     """ Write a FASTA document with the sorted sequences """
 
     fasta_string = ""
@@ -112,12 +120,14 @@ if __name__ == "__main__":
     tab_string = ""
     for idx, acc in enumerate(sorted_acc):
         tab_string += "".join([acc.ljust(20), str(orgs[acc]).ljust(35),
-                               str(gc_sorted[idx][1]).ljust(10),
+                               str(gc[idx][1]).ljust(10),
                                str(lengths[acc]).ljust(15), "\n"])
 
     tab_file.write(tab_string)
     tab_file.close()
 
+    print fasta_string
+    print tab_string
 
 
 

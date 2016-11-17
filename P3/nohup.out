@@ -1,0 +1,75 @@
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+[  96216]   WARN - api.vfs.impl.local.FileWatcher - Watcher terminated with exit code 0 
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+[ 553253]   WARN - api.vfs.impl.local.FileWatcher - Watcher terminated with exit code 0 
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+[ 310257]   WARN - api.vfs.impl.local.FileWatcher - Watcher terminated with exit code 0 
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+[3133825]   WARN - api.vfs.impl.local.FileWatcher - Watcher terminated with exit code 0 
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+[ 361226]  ERROR - til.concurrency.QueueProcessor - Index: 0, Size: 0 
+java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
+	at java.util.ArrayList.rangeCheck(ArrayList.java:653)
+	at java.util.ArrayList.get(ArrayList.java:429)
+	at com.jetbrains.python.PyParameterInfoHandler.updateUI(PyParameterInfoHandler.java:154)
+	at com.jetbrains.python.PyParameterInfoHandler.updateUI(PyParameterInfoHandler.java:40)
+	at com.intellij.codeInsight.hint.ParameterInfoComponent.update(ParameterInfoComponent.java:208)
+	at com.intellij.codeInsight.hint.ShowParameterInfoContext.showParameterHint(ShowParameterInfoContext.java:129)
+	at com.intellij.codeInsight.hint.ShowParameterInfoContext.showMethodInfo(ShowParameterInfoContext.java:164)
+	at com.intellij.codeInsight.hint.ShowParameterInfoContext.showHint(ShowParameterInfoContext.java:110)
+	at com.jetbrains.python.PyParameterInfoHandler.showParameterInfo(PyParameterInfoHandler.java:73)
+	at com.jetbrains.python.PyParameterInfoHandler.showParameterInfo(PyParameterInfoHandler.java:40)
+	at com.intellij.codeInsight.hint.ShowParameterInfoHandler.invoke(ShowParameterInfoHandler.java:99)
+	at com.intellij.codeInsight.AutoPopupController$5.run(AutoPopupController.java:180)
+	at com.intellij.util.concurrency.QueueProcessor.runSafely(QueueProcessor.java:238)
+	at com.intellij.util.Alarm$Request$1.run(Alarm.java:351)
+	at com.intellij.openapi.application.impl.LaterInvocator$FlushQueue.run(LaterInvocator.java:332)
+	at java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:311)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:756)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:76)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:726)
+	at com.intellij.ide.IdeEventQueue.defaultDispatchEvent(IdeEventQueue.java:734)
+	at com.intellij.ide.IdeEventQueue._dispatchEvent(IdeEventQueue.java:569)
+	at com.intellij.ide.IdeEventQueue.dispatchEvent(IdeEventQueue.java:382)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+[ 361228]  ERROR - til.concurrency.QueueProcessor - PyCharm Community Edition 4.5.4  Build #PC-141.2569 
+[ 361228]  ERROR - til.concurrency.QueueProcessor - JDK: 1.8.0_111 
+[ 361228]  ERROR - til.concurrency.QueueProcessor - VM: OpenJDK 64-Bit Server VM 
+[ 361228]  ERROR - til.concurrency.QueueProcessor - Vendor: Oracle Corporation 
+[ 361228]  ERROR - til.concurrency.QueueProcessor - OS: Linux 
+[ 361228]  ERROR - til.concurrency.QueueProcessor - Last Action: EditorBackSpace 
+[3154088]   WARN - api.vfs.impl.local.FileWatcher - Watcher terminated with exit code 0 
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+[5876861]   WARN - tellij.ide.HackyRepaintManager - Access to realized (ever shown) UI components should be done only from the AWT event dispatch thread, revalidate(), invalidate() & repaint() is ok from any thread 
+java.lang.Exception
+	at com.intellij.ide.IdeRepaintManager.checkThreadViolations(IdeRepaintManager.java:128)
+	at com.intellij.ide.IdeRepaintManager.addDirtyRegion(IdeRepaintManager.java:118)
+	at javax.swing.JComponent.repaint(JComponent.java:4793)
+	at java.awt.Component.repaint(Component.java:3311)
+	at javax.swing.JLabel.setIcon(JLabel.java:409)
+	at com.intellij.ide.actions.SearchEverywhereAction$CalcThread$29$3$1.run(SearchEverywhereAction.java:2095)
+	at com.intellij.openapi.application.impl.ApplicationImpl$8.run(ApplicationImpl.java:400)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+	at org.jetbrains.ide.PooledThreadExecutor$1$1.run(PooledThreadExecutor.java:56)
+[11260456]   WARN - api.vfs.impl.local.FileWatcher - Watcher terminated with exit code 0 
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+[1136671]   WARN - api.vfs.impl.local.FileWatcher - Watcher terminated with exit code 0 
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0

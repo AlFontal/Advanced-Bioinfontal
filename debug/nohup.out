@@ -1,0 +1,143 @@
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+[  91468]   WARN - api.vfs.impl.local.FileWatcher - Watcher terminated with exit code 0 
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+[ 326860]   WARN - api.vfs.impl.local.FileWatcher - Watcher terminated with exit code 0 
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+Nov 03, 2016 1:46:00 PM java.util.prefs.FileSystemPreferences$1 run
+INFO: Created user preferences directory.
+Nov 03, 2016 1:46:00 PM java.util.prefs.FileSystemPreferences$6 run
+WARNING: Prefs file removed in background /home/fonta004/.java/.userPrefs/prefs.xml
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+[ 176354]  ERROR - roject.impl.ProjectManagerImpl - Assertion failed: Default project has been already disposed! 
+java.lang.Throwable
+	at com.intellij.openapi.diagnostic.Logger.assertTrue(Logger.java:156)
+	at com.intellij.openapi.project.impl.ProjectManagerImpl.getDefaultProject(ProjectManagerImpl.java:304)
+	at com.intellij.openapi.project.ProjectUtil.guessCurrentProject(ProjectUtil.java:132)
+	at com.intellij.openapi.wm.impl.status.InfoAndProgressPanel.getAnchor(InfoAndProgressPanel.java:422)
+	at com.intellij.openapi.wm.impl.status.InfoAndProgressPanel.buildInInlineIndicator(InfoAndProgressPanel.java:391)
+	at com.intellij.openapi.wm.impl.status.InfoAndProgressPanel.removeProgress(InfoAndProgressPanel.java:257)
+	at com.intellij.openapi.wm.impl.status.InfoAndProgressPanel.dispose(InfoAndProgressPanel.java:173)
+	at com.intellij.openapi.util.Disposer$1.execute(Disposer.java:48)
+	at com.intellij.openapi.util.Disposer$1.execute(Disposer.java:44)
+	at com.intellij.openapi.util.objectTree.ObjectNode$1.execute(ObjectNode.java:132)
+	at com.intellij.openapi.util.objectTree.ObjectNode$1.execute(ObjectNode.java:106)
+	at com.intellij.openapi.util.objectTree.ObjectTree.executeActionWithRecursiveGuard(ObjectTree.java:142)
+	at com.intellij.openapi.util.objectTree.ObjectNode.execute(ObjectNode.java:106)
+	at com.intellij.openapi.util.objectTree.ObjectNode$1.execute(ObjectNode.java:122)
+	at com.intellij.openapi.util.objectTree.ObjectNode$1.execute(ObjectNode.java:106)
+	at com.intellij.openapi.util.objectTree.ObjectTree.executeActionWithRecursiveGuard(ObjectTree.java:142)
+	at com.intellij.openapi.util.objectTree.ObjectNode.execute(ObjectNode.java:106)
+	at com.intellij.openapi.util.objectTree.ObjectNode$1.execute(ObjectNode.java:122)
+	at com.intellij.openapi.util.objectTree.ObjectNode$1.execute(ObjectNode.java:106)
+	at com.intellij.openapi.util.objectTree.ObjectTree.executeActionWithRecursiveGuard(ObjectTree.java:142)
+	at com.intellij.openapi.util.objectTree.ObjectNode.execute(ObjectNode.java:106)
+	at com.intellij.openapi.util.objectTree.ObjectNode$1.execute(ObjectNode.java:122)
+	at com.intellij.openapi.util.objectTree.ObjectNode$1.execute(ObjectNode.java:106)
+	at com.intellij.openapi.util.objectTree.ObjectTree.executeActionWithRecursiveGuard(ObjectTree.java:142)
+	at com.intellij.openapi.util.objectTree.ObjectNode.execute(ObjectNode.java:106)
+	at com.intellij.openapi.util.objectTree.ObjectTree.executeAll(ObjectTree.java:128)
+	at com.intellij.openapi.util.Disposer.dispose(Disposer.java:119)
+	at com.intellij.openapi.util.Disposer.dispose(Disposer.java:115)
+	at com.intellij.openapi.application.impl.ApplicationImpl$7.run(ApplicationImpl.java:300)
+	at com.intellij.openapi.application.impl.ApplicationImpl.runWriteAction(ApplicationImpl.java:1009)
+	at com.intellij.openapi.application.impl.ApplicationImpl.disposeSelf(ApplicationImpl.java:297)
+	at com.intellij.openapi.application.impl.ApplicationImpl.doExit(ApplicationImpl.java:858)
+	at com.intellij.openapi.application.impl.ApplicationImpl.access$1000(ApplicationImpl.java:92)
+	at com.intellij.openapi.application.impl.ApplicationImpl$16.run(ApplicationImpl.java:834)
+	at com.intellij.openapi.application.impl.ApplicationImpl.exit(ApplicationImpl.java:840)
+	at com.intellij.openapi.application.impl.ApplicationImpl.exit(ApplicationImpl.java:789)
+	at com.intellij.openapi.application.impl.ApplicationImpl.exit(ApplicationImpl.java:784)
+	at com.intellij.openapi.wm.impl.IdeFrameImpl$5$1.run(IdeFrameImpl.java:273)
+	at com.intellij.openapi.application.impl.LaterInvocator$FlushQueue.runNextEvent(LaterInvocator.java:345)
+	at com.intellij.openapi.application.impl.LaterInvocator$FlushQueue.run(LaterInvocator.java:329)
+	at java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:311)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:756)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:76)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:726)
+	at com.intellij.ide.IdeEventQueue.defaultDispatchEvent(IdeEventQueue.java:857)
+	at com.intellij.ide.IdeEventQueue._dispatchEvent(IdeEventQueue.java:658)
+	at com.intellij.ide.IdeEventQueue.dispatchEvent(IdeEventQueue.java:386)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+[ 176357]  ERROR - roject.impl.ProjectManagerImpl - PyCharm Community Edition 2016.1.4  Build #PC-145.1504.1 
+[ 176357]  ERROR - roject.impl.ProjectManagerImpl - JDK: 1.8.0_76-release 
+[ 176357]  ERROR - roject.impl.ProjectManagerImpl - VM: OpenJDK 64-Bit Server VM 
+[ 176357]  ERROR - roject.impl.ProjectManagerImpl - Vendor: JetBrains s.r.o 
+[ 176357]  ERROR - roject.impl.ProjectManagerImpl - OS: Linux 
+[ 176357]  ERROR - roject.impl.ProjectManagerImpl - Last Action: EditorDown 
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+[  94564]   WARN - .skeletons.PySkeletonRefresher - Some skeletons failed to generate 
+[  94564]   WARN - .skeletons.PySkeletonRefresher - 1 module failed in 1 interpreter. <a href="#">Details...</a> 
+[  94564]   WARN - .skeletons.PySkeletonRefresher - Failed modules 
+[  94564]   WARN - .skeletons.PySkeletonRefresher - boost.mpi 
+[ 136964]   WARN - ConfigurableExtensionPointUtil - ignore deprecated groupId: editor for id: editor.preferences.import 
+[ 244905]   WARN - ConfigurableExtensionPointUtil - ignore deprecated groupId: editor for id: editor.preferences.import 
+[ 271818]   WARN - ConfigurableExtensionPointUtil - ignore deprecated groupId: editor for id: editor.preferences.import 
+[ 292021]   WARN - ConfigurableExtensionPointUtil - ignore deprecated groupId: editor for id: editor.preferences.import 
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+[1817307]   WARN - api.vfs.impl.local.FileWatcher - Watcher terminated with exit code 0 
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+PuTTY X11 proxy: unable to connect to forwarded X server: Network error: Connection refused
+
+Start Failed: Failed to initialize graphics environment
+
+java.awt.AWTError: Can't connect to X11 window server using 'localhost:12.0' as the value of the DISPLAY variable.
+	at sun.awt.X11GraphicsEnvironment.initDisplay(Native Method)
+	at sun.awt.X11GraphicsEnvironment.access$200(X11GraphicsEnvironment.java:65)
+	at sun.awt.X11GraphicsEnvironment$1.run(X11GraphicsEnvironment.java:115)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at sun.awt.X11GraphicsEnvironment.<clinit>(X11GraphicsEnvironment.java:74)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:264)
+	at java.awt.GraphicsEnvironment.createGE(GraphicsEnvironment.java:103)
+	at java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment(GraphicsEnvironment.java:82)
+	at sun.awt.X11.XToolkit.<clinit>(XToolkit.java:126)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:264)
+	at java.awt.Toolkit$2.run(Toolkit.java:860)
+	at java.awt.Toolkit$2.run(Toolkit.java:855)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.awt.Toolkit.getDefaultToolkit(Toolkit.java:854)
+	at java.awt.Toolkit.getEventQueue(Toolkit.java:1734)
+	at java.awt.EventQueue.isDispatchThread(EventQueue.java:1043)
+	at javax.swing.SwingUtilities.isEventDispatchThread(SwingUtilities.java:1361)
+	at javax.swing.text.StyleContext.reclaim(StyleContext.java:454)
+	at javax.swing.text.StyleContext.addAttribute(StyleContext.java:311)
+	at javax.swing.text.html.StyleSheet.addAttribute(StyleSheet.java:578)
+	at javax.swing.text.StyleContext$NamedStyle.addAttribute(StyleContext.java:1501)
+	at javax.swing.text.StyleContext$NamedStyle.setName(StyleContext.java:1312)
+	at javax.swing.text.StyleContext$NamedStyle.<init>(StyleContext.java:1259)
+	at javax.swing.text.StyleContext.addStyle(StyleContext.java:107)
+	at javax.swing.text.StyleContext.<init>(StyleContext.java:87)
+	at javax.swing.text.html.StyleSheet.<init>(StyleSheet.java:166)
+	at javax.swing.text.html.HTMLEditorKit.getStyleSheet(HTMLEditorKit.java:391)
+	at com.intellij.util.ui.UIUtil.<clinit>(UIUtil.java:98)
+	at com.intellij.ide.plugins.PluginManager.start(PluginManager.java:72)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.intellij.ide.Bootstrap.main(Bootstrap.java:39)
+	at com.intellij.idea.Main.main(Main.java:101)
+
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+Already running
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+Already running
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+Already running
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+RuntimeError: module compiled against API version a but this version of numpy is 9
+RuntimeError: module compiled against API version 0xa but this version of numpy is 0x9
