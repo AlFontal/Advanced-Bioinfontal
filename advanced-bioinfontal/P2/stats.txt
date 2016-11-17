@@ -1,7 +1,0 @@
-XM_001694789        Chlamydomonas reinhardtii          45.54     3579           
-XM_002906034        Phytophthora infestans T30-4       52.96     2784           
-NM_001130718        Strongylocentrotus purpuratus      67.53     2868           
-NM_166020           Drosophila melanogaster            39.88     4476           
-NM_001102461        Bombyx mori                        56.5      2739           
-NM_179453           Arabidopsis thaliana               49.69     3507           
-NM_001022775        Schizosaccharomyces pombe 972h-    50.8      2505           
