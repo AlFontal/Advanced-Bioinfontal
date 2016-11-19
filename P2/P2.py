@@ -86,6 +86,21 @@ def sort_tuples(tuple, p, rev = True):
 
     return sorted_tuples
 
+class GenbankRecord:
+    """
+    Contains information in a GenBank record about a DNA sequence
+    """
+    def __init__(self, ID, organism, sequence):
+        self.ID = ID
+        self.organism = organism
+        self.sequence = sequence
+        self.length = len(self.sequence)
+        self.gc = calc_gc(sequence)
+
+    def info(self):
+        print "{}\t{}\t{}\t{}".format(self.ID, self.organism, self.gc,
+                                      self.length)
+
 
 if __name__ == "__main__":
 
@@ -126,9 +141,9 @@ if __name__ == "__main__":
     tab_file.write(tab_string)
     tab_file.close()
 
-    print fasta_string
     print tab_string
 
 
-
+    seq1 = GenbankRecord("BetaClass", "Alien", "CGCGGGTATATAGC")
+    seq1.info()
 
