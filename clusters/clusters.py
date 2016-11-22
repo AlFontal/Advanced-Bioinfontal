@@ -6,6 +6,7 @@ import scipy.cluster.hierarchy as sch
 import pandas as pd
 import matplotlib.pylab as plt
 import seaborn as sns
+import subprocess
 """
 Script to practise clustering of biological data
 """
@@ -45,19 +46,25 @@ if __name__ == "__main__":
     distances = sch.distance.pdist(data_frame, metric="euclidean")
     clustering = sch.linkage(distances, method='complete')
     tree = sch.dendrogram(clustering,labels=samples)
-    #plt.show()
+    plt.show()
 
     data_frame = data_frame.transpose()
 
     distances = sch.distance.pdist(data_frame, metric = 'correlation')
     clustering = sch.linkage(distances, method='complete')
     tree = sch.dendrogram(clustering , leaf_font_size=2,
-                          color_threshold=4, labels = genes)
-    #plt.show()
+                          color_threshold=4, labels= -genes)
+    plt.show()
 
-    clustermap = sns.clustermap(data_frame)
-    clustermap.savefig("testCluster.pdf")
-    cmd = 
+    clustermap_fn = "testCluster.pdf"
+    clustermap = sns.clustermap(data_frame.transpose(),
+                                figsize=(20,12),
+                                metric= "correlation",
+                                method = "complete",
+                                row_cluster=False)
+    clustermap.savefig(clustermap_fn)
+    cmd = "evince {}".format(clustermap_fn)
+    subprocess.check_call(cmd, shell=True)
 
 
 

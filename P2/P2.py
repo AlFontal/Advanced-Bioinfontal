@@ -41,18 +41,16 @@ def parse_genbank(filename):
     else:
         print "Input file type not supported"
 
-    seq = {}
-    org = {}
-    length = {}
-    gc = []
+    records = []
+
     for idx, line in enumerate(gb):
         if line.startswith("ACCESSION"):
             access = line[12:].split(" ")[0].strip()
-            seq[access] = ""
+
 
         elif "ORGANISM" in line:
             organism = line[12:].strip()
-            org[access] = organism
+
 
         elif line.startswith("ORIGIN"):
             seq_idx_start = idx + 1
@@ -65,15 +63,11 @@ def parse_genbank(filename):
                 sequence.append(gb[seq_idx_start + i][10:].strip())
             sequence = "".join(sequence)
             sequence = sequence.replace(" ", "").upper()
-            seq[access] = sequence
 
-            gc.append((access, calc_gc(sequence)))
+            record = GenbankRecord(access, organism, sequence)
+            records.append(record)
 
-            length[access] = len(sequence)
-
-    parsed_list = [org, seq, gc, length]
-
-    return parsed_list
+    return records
 
 def sort_tuples(tuple, p, rev = True):
     """
@@ -101,19 +95,17 @@ class GenbankRecord:
         print "{}\t{}\t{}\t{}".format(self.ID, self.organism, self.gc,
                                       self.length)
 
+def sort_records_gc(records_list):
 
 if __name__ == "__main__":
 
     """ Parse the Genbank file and store required data """
 
-    parsed = parse_genbank(argv[1])
-    orgs = parsed[0]
-    seqs = parsed[1]
-    gc = parsed[2]
-    lengths = parsed[3]
+    records = parse_genbank(argv[1])
 
     """ Sort and get list of Accession IDs sorted by GC content """
-
+    for record in records:
+        gc =
     gc_sorted = sort_tuples(gc, 1)
     sorted_acc = []
     for tup in gc_sorted:
