@@ -79,6 +79,23 @@ def run_lastz(ref, query, out_fn="outlastz.txt", format="general"):
            print "There was an error - lastz command exited with non-zero code"
 
 
+def parse_lastz_out(lastz_fn):
+    with open(lastz_fn) as gen_align:
+        covered = []
+        for line in gen_align.readlines()[1:]:
+            covered.append(map(int,line.split("\t")[4:6]))
+
+        covered = sorted(covered, reverse=False)
+
+
+        """
+        for idx, fragment in enumerate(covered):
+            if idx == 0:
+                continue
+            if fragment[1] < covered[idx-1][1]:
+                print fragment
+        """
+
 class Assembly:
     """
     Object that stores information about assemblies and eases the process of
@@ -123,4 +140,10 @@ if __name__ == "__main__":
     contigs = parse_fasta("velvet_15.fa")
     velv = Assembly(contigs)
     velv.print_stats()
-    run_lastz(chrom_fn, contigs_fn)
+    align_output = run_lastz(chrom_fn, contigs_fn)
+    parse_lastz_out(align_output)
+    a = set(range(1, 4))
+    b = set(range(5, 9))
+    c = set(range(3, 7))
+    d = a | b | c
+    print d
