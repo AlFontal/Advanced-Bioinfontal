@@ -3,6 +3,8 @@
 from __future__ import division
 import subprocess
 import os
+from sys import argv
+
 """
 Script to solve Exam from Nov'15 in Advanced Bioinformatics
 """
@@ -82,19 +84,51 @@ def run_lastz(ref, query, out_fn="outlastz.txt", format="general"):
 def parse_lastz_out(lastz_fn):
     with open(lastz_fn) as gen_align:
         covered = []
-        for line in gen_align.readlines()[1:]:
+        align = gen_align.readlines()[1:]
+        length = int(align[0].split("\t")[3])
+        for line in align:
             covered.append(map(int,line.split("\t")[4:6]))
 
         covered = sorted(covered, reverse=False)
 
 
-        """
-        for idx, fragment in enumerate(covered):
-            if idx == 0:
-                continue
-            if fragment[1] < covered[idx-1][1]:
-                print fragment
-        """
+        covered = set.union(*map(lambda l: set(range(l[0], l[1])), covered))
+
+        total = set(range(length))
+        uncovered = list(covered ^ total)
+        regions_idx = get_regions_idx(uncovered)
+        return regions_idx
+
+def get_regions_idx(nt_list):
+    regions = []
+    start_nt = nt_list[0]
+    for idx, nt in enumerate(nt_list):
+        if nt == nt_list[-1]:
+            regions.append([start_nt, nt+1])
+            return regions
+
+        elif nt == nt_list[idx+1] - 1:
+            continue
+
+        else:
+            regions.append([start_nt, nt+1])
+            start_nt = nt_list[idx+1]
+
+
+def get_regions(genome, regions_idx):
+    """
+
+    :param seq:
+    :param regions_idx:
+    :return:
+    """
+    seqs = []
+    for region in regions_idx:
+        seq = genome[region[0]:region[1]]
+        seqs.append(seq)
+
+    return seqs
+
 
 class Assembly:
     """
@@ -102,48 +136,66 @@ class Assembly:
     storing and retrieving data from them
 
     """
-    def __init__(self, dict):
+    def __init__(self, contigs):
         """
 
         :param dict: dictionary containing a parsed assembly file. It should
         contain labels as keys and contigs as values.
         """
-        self.sorted_contigs = sort_tuples(tuple_to_tuple_len(dict.items()), 1)
-        self.nr_contigs = len(self.sorted_contigs)
+        self.nr_contigs = len(contigs)
+        self.sorted_contigs = \
+            sort_tuples(tuple_to_tuple_len(contigs.items()), 1)
+
+        self.size = self.calc_size()
+        self.n50_size, self.n50_idx = self.nk(50)
+
+        self.fn = ""
+
+    def calc_size(self):
         size = 0
         for contig in self.sorted_contigs:
             size += contig[1]
-        self.size = size
+        return size
 
+    def nk(self, k):
+        """
+        """
         current_size = 0
         for idx, contig in enumerate(self.sorted_contigs):
             current_size += contig[1]
-            if current_size > self.size/2:
-                self.n50_size = contig[1]
-                self.n50_idx = idx + 1
-                break
+            if current_size > self.size * (k / 100):
+                nk_size = contig[1]
+                nk_index = idx + 1
+                return nk_size, nk_index
 
-    def print_stats(self):
+    def stats(self):
         """
         Prints stats about the assembly
         """
-        print "This assembly contains {} contigs and has a total size of {}" \
-              " nt, The N50 index is {} and the N50 size {} nt.".format(
-            self.nr_contigs, self.size, self.n50_idx, self.n50_size)
+        return "{}: TOTAL={}; N50 SIZE={}, N50 INDEX={}".format(
+            self.fn, self.size, self.n50_size, self.n50_idx)
 
 
 if __name__ == "__main__":
 
-    chrom_fn = "chr3.fa"
-    contigs_fn = "velvet_15.fa"
-    chrom = parse_fasta("chr3.fa")
-    contigs = parse_fasta("velvet_15.fa")
+    chrom_fn = argv[1]
+    contigs_fn = argv[2]
+    chrom = parse_fasta(chrom_fn)
+    contigs = parse_fasta(contigs_fn)
     velv = Assembly(contigs)
-    velv.print_stats()
+    velv.fn = contigs_fn
+    chr = Assembly(chrom)
+    chr.fn = chrom_fn
     align_output = run_lastz(chrom_fn, contigs_fn)
-    parse_lastz_out(align_output)
-    a = set(range(1, 4))
-    b = set(range(5, 9))
-    c = set(range(3, 7))
-    d = a | b | c
-    print d
+    regions_idx = parse_lastz_out(align_output)
+    regions = get_regions(chrom.values()[0], regions_idx)
+
+    print chr.stats()
+    print velv.stats()
+    print "Uncovered regions:"
+    for idx, region, in enumerate(regions):
+        print "{}:{}\t{}".format(regions_idx[idx][0], regions_idx[idx][1],
+                                 region)
+
+    print "Number of uncovered regions: ", str(len(regions))
+    print "Number of uncovered bases: ", str(sum(map(len,regions)))
