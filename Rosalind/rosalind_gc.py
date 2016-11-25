@@ -1,5 +1,8 @@
+#! /usr/bin/env python
 """
 Author: Alejandro Fontal
+Student Registration Number: 920110242090
+Script to solve GC problem in Rosalind
 """
 
 
@@ -8,34 +11,26 @@ from sys import argv
 fileName = argv[1]
 
 
-def fasta_parse(fileName):
+def parse_fasta(fasta_fn):
     """
-
-    :param fileName: Name of a FASTA file
-    :return: Two lists, one containing names of the seqs and one with the seqs.
+    Takes a fasta file and parses it returning a dictionary containing
+    labels as keys and sequences as values.
+    :param fasta_fn: Filename of the FASTA file to parse
+    :return: A dictionary containing labels as keys and sequences as values.
     """
+    with open(fasta_fn) as fasta_file:
+        fasta_list = fasta_file.read().splitlines()
+        parsed_seqs = {}
+        for line in fasta_list:
+            if line.startswith(">"):
+                label = line[1:]
+                parsed_seqs[label] = ""
+            else:
+                parsed_seqs[label] += line
+    return parsed_seqs
 
-    fastaFile = open(fileName, 'r')
-    seq = []
-    seqs = []
-    names = []
-    for line in fastaFile:
-        if line[0] == ">":
-            line = line.rstrip()
-            names.append(line[1:])
-            if seq:
-                seq = "".join(seq)
-                seqs.append(seq)
-                seq = []
-        else:
-            line = line.rstrip()
-            seq.append(line)
-    seq = "".join(seq)
-    seqs.append(seq)
-    fastaFile.close()
-    return names, seqs
 
-def calc_max_GC(seqs, names):
+def calc_max_GC(seqs_dict):
     """
     Takes a list of sequences and gives the GC% of the one with the most GC%
 
@@ -45,24 +40,27 @@ def calc_max_GC(seqs, names):
     and the name of the sequence with the maximum percentage.
     """
 
-    gc_contents = {}
-    for idx, seq in enumerate(seqs):
+    max_gc = 0
+
+    for seq in seqs_dict.items():
+        label, seq = seq
         gc = seq.count("G") + seq.count("C")
         gc_perc = (gc/len(seq)) * 100
-        gc_contents[gc_perc] = names[idx]
+        if gc_perc > max_gc:
+            max_gc = gc_perc
+            max_label = label
 
-    max_gc = max(gc_contents.keys())
-    max_seq = gc_contents[max_gc]
+    return max_label, max_gc
 
-    return max_gc, max_seq
 
-names, seqs = fasta_parse(fileName)
+if __name__ == "__main__":
 
-max_gc, max_seq = calc_max_GC(seqs, names)
-f = open('output.txt', 'w')
-f.write(str(max_seq))
-f.write("\n")
-f.write(str(max_gc))
-f.close()
-print str(max_seq)
-print max_gc
+    seqs = parse_fasta(fileName)
+
+    max_label, max_gc = calc_max_GC(seqs)
+
+    with open('output.txt', 'w') as f:
+        out_str = "{}\n{}".format(max_label, max_gc)
+        f.write(out_str)
+
+    print out_str
