@@ -30,8 +30,8 @@ def sort_tuples(tuple, p, rev=True):
 
 def parse_fasta(fasta_fn):
     """
-    Takes a fasta file and parses it returning a dictionary containing
-    labels as keys and sequences as values.
+    Parses fasta file returning a dict with  labels as keys and seqs as values.
+
     :param fasta_fn: Filename of the FASTA file to parse
     :return: A dictionary containing labels as keys and sequences as values.
     """
@@ -71,6 +71,7 @@ def parse_fastq_file(filename):
 def run_tool(arg1, arg2, out_fn):
     """
     Runs the tool program in the Linux Shell
+
     :return: Filename of the output
     """
     path = os.getcwd() + "/" + out_fn
